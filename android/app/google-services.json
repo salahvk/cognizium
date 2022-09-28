@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "449796506333",
+    "project_id": "cogniziumsh",
+    "storage_bucket": "cogniziumsh.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:449796506333:android:a877622971e255995fd134",
+        "android_client_info": {
+          "package_name": "com.example.cognizium"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "449796506333-u2115c7lps79c2fs9sj7bjkd78jt4fur.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgFb7nBmnC6t_lzQTQneGLFM7u16KOLKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "449796506333-u2115c7lps79c2fs9sj7bjkd78jt4fur.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
