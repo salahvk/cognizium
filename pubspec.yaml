@@ -40,6 +40,7 @@ dependencies:
   google_fonts: ^3.0.1
   firebase_core: ^1.23.0
   dropdown_button2: ^1.8.2
+  simple_animations: ^5.0.0+2
 
 dev_dependencies:
   flutter_test:

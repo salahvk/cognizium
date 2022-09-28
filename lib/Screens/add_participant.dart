@@ -271,7 +271,7 @@ class _AddParticipantState extends State<AddParticipant> {
         .collection(authUser.email!)
         .doc(authUser.uid)
         .collection('Participants')
-        .doc();
+        .doc(nameController.text);
     print(authUser.email);
     print(authUser.uid);
     final user = Participants(
