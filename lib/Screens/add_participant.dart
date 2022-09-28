@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cognizium/Screens/Home_page.dart';
 import 'package:cognizium/components/color_manager.dart';
 import 'package:cognizium/components/styles_manager.dart';
 import 'package:cognizium/controllers/controllers.dart';
 import 'package:cognizium/model/participantData.dart';
+import 'package:cognizium/utils/snack_bar.dart';
 import 'package:cognizium/widgets/title_widgets.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -186,10 +188,10 @@ class _AddParticipantState extends State<AddParticipant> {
                 ),
               ),
             ),
-            // * Address
+            // * Place
             const Padding(
               padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-              child: TitleWidget(name: 'Address'),
+              child: TitleWidget(name: 'Place'),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -209,7 +211,7 @@ class _AddParticipantState extends State<AddParticipant> {
                   style: const TextStyle(),
                   controller: addressController,
                   decoration: InputDecoration(
-                      hintText: 'Enter Address',
+                      hintText: 'Enter Place',
                       hintStyle: getRegularStyle(
                           color: const Color.fromARGB(255, 173, 173, 173),
                           fontSize: 15)),
@@ -257,12 +259,13 @@ class _AddParticipantState extends State<AddParticipant> {
   }
 
   addParticipant() async {
-    // print(selectedValue);
-    // print(nameController.text);
-    // print(fatherNameController.text);
-    // print(contactNoController.text);
-    // print(addressController.text);
-    // print(ageController.text);
+    if (nameController.text.isEmpty) {
+      showSnackBar("Enter a Name!", context,
+          icon: Icons.email, color: Colors.white);
+    } else if (addressController.text.isEmpty) {
+      showSnackBar("Enter a place!", context,
+          icon: Icons.email, color: Colors.white);
+    }
 
     final authUser = FirebaseAuth.instance.currentUser;
     print(authUser!.email);
@@ -279,13 +282,16 @@ class _AddParticipantState extends State<AddParticipant> {
         name: nameController.text,
         father: fatherNameController.text,
         contactNo: contactNoController.text,
-        address: addressController.text,
+        place: addressController.text,
         age: ageController.text);
     final json = user.tojson();
     print(json);
     try {
       await docUser.set(json);
       print("Participant added");
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx) {
+        return const HomePage();
+      }), (route) => false);
     } on Exception {
       print('Some exception occured');
     }

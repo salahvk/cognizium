@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cognizium/Screens/add_participant.dart';
+import 'package:cognizium/Screens/sign_in.dart';
 import 'package:cognizium/model/participantData.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -31,17 +31,21 @@ class _DataState extends State<HomePage> {
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (ctx) {
-                    return const AddParticipant();
-                  }));
+                  FirebaseAuth.instance.signOut();
+                  Navigator.pushAndRemoveUntil(context,
+                      MaterialPageRoute(builder: (ctx) {
+                    return const SignIn();
+                  }), (route) => false);
                 },
-                child: const Text("Add Participant")),
+                child: const Text("Log out")),
           )
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Navigator.pushNamed(context, Routes.dataEntry);
+          Navigator.push(context, MaterialPageRoute(builder: (ctx) {
+            return const AddParticipant();
+          }));
         },
         child: const Icon(Icons.add),
       ),
@@ -55,22 +59,26 @@ class _DataState extends State<HomePage> {
 
             //! declaration
 
-            List<String>? date = users?.map(((e) {
+            List<String>? zone = users?.map(((e) {
               return e.zone;
             })).toList();
-            List<String>? from = users?.map(((e) {
+            List<String>? name = users?.map(((e) {
               return e.name;
             })).toList();
-            List<String>? to = users?.map(((e) {
+            List<String>? place = users?.map(((e) {
+              return e.place;
+            })).toList();
+            List<String>? age = users?.map(((e) {
+              return e.age;
+            })).toList();
+            List<String>? father = users?.map(((e) {
               return e.father;
             })).toList();
-            List<String>? status = users?.map(((e) {
+            List<String>? contactNo = users?.map(((e) {
               return e.contactNo;
             })).toList();
-            List<String>? id = users?.map(((e) {
-              return e.address;
-            })).toList();
-            int? len = date?.length;
+
+            int? len = zone?.length;
 
             //! declaration
 
@@ -103,90 +111,117 @@ class _DataState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              width: size.width / 7.8,
+                              width: size.width * .15,
                               height: size.height / 10,
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.white)),
-                              child: Center(child: Text(date![index])),
+                              child: Center(child: Text(zone![index])),
                             ),
                             Container(
-                              width: size.width / 4.3,
+                              width: size.width * .15,
                               height: size.height / 10,
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.white)),
                               child: Center(
                                   child: SingleChildScrollView(
-                                      child: Text(from![index]))),
+                                      child: Text(name![index]))),
                             ),
                             Container(
-                              width: size.width / 4.3,
+                              width: size.width * .15,
                               height: size.height / 10,
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.white)),
                               child: Center(
                                   child: SingleChildScrollView(
-                                      child: Text(to![index]))),
+                                      child: Text(place![index]))),
                             ),
-                            Center(
-                              child: Container(
-                                width: size.width / 3.4,
-                                height: size.height / 10,
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.orange),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(6, 0, 0, 3),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      // Expanded(
-                                      //   child: DropdownButtonHideUnderline(
-                                      //     child: DropdownButton2<String>(
-                                      //       value: status![index],
-                                      //       dropdownMaxHeight: size.height * .3,
-                                      //       isExpanded: true,
-                                      //       hint: Text(hint),
-                                      //       dropdownWidth: size.width / 3.5,
-                                      //       disabledHint: Text(hint),
-                                      //       items: statusList
-                                      //           .map(
-                                      //             (e) =>
-                                      //                 DropdownMenuItem<String>(
-                                      //               value: e,
-                                      //               child: Text(e),
-                                      //             ),
-                                      //           )
-                                      //           .toList(),
-                                      //       onChanged: (v) {
-                                      //         setState(() {
-                                      //           if (v != null) {
-                                      //             selectedStatus = v;
-                                      //             print(selectedStatus);
-                                      //             print(id![index]);
-                                      //             final docuser =
-                                      //                 FirebaseFirestore
-                                      //                     .instance
-                                      //                     .collection(
-                                      //                         'users data')
-                                      //                     .doc(id[index]);
-                                      //             docuser.update({
-                                      //               'status': '$selectedStatus'
-                                      //             });
-                                      //           } else {
-                                      //             selectedStatus = hint;
-                                      //           }
-                                      //         });
-                                      //       },
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            )
+                            Container(
+                              width: size.width * .15,
+                              height: size.height / 10,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.white)),
+                              child: Center(
+                                  child: SingleChildScrollView(
+                                      child: Text(age![index]))),
+                            ),
+                            Container(
+                              width: size.width * .15,
+                              height: size.height / 10,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.white)),
+                              child: Center(
+                                  child: SingleChildScrollView(
+                                      child: Text(father![index]))),
+                            ),
+                            Container(
+                              width: size.width * .15,
+                              height: size.height / 10,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.white)),
+                              child: Center(
+                                  child: SingleChildScrollView(
+                                      child: Text(contactNo![index]))),
+                            ),
+                            // Center(
+                            //   child: Container(
+                            //     width: size.width / 3.4,
+                            //     height: size.height / 10,
+                            //     decoration: BoxDecoration(
+                            //       border: Border.all(color: Colors.orange),
+                            //       borderRadius: BorderRadius.circular(15),
+                            //     ),
+                            //     child: Padding(
+                            //       padding:
+                            //           const EdgeInsets.fromLTRB(6, 0, 0, 3),
+                            //       child: Row(
+                            //         mainAxisAlignment: MainAxisAlignment.center,
+                            //         children: const [
+                            //           // Expanded(
+                            //           //   child: DropdownButtonHideUnderline(
+                            //           //     child: DropdownButton2<String>(
+                            //           //       value: status![index],
+                            //           //       dropdownMaxHeight: size.height * .3,
+                            //           //       isExpanded: true,
+                            //           //       hint: Text(hint),
+                            //           //       dropdownWidth: size.width / 3.5,
+                            //           //       disabledHint: Text(hint),
+                            //           //       items: statusList
+                            //           //           .map(
+                            //           //             (e) =>
+                            //           //                 DropdownMenuItem<String>(
+                            //           //               value: e,
+                            //           //               child: Text(e),
+                            //           //             ),
+                            //           //           )
+                            //           //           .toList(),
+                            //           //       onChanged: (v) {
+                            //           //         setState(() {
+                            //           //           if (v != null) {
+                            //           //             selectedStatus = v;
+                            //           //             print(selectedStatus);
+                            //           //             print(id![index]);
+                            //           //             final docuser =
+                            //           //                 FirebaseFirestore
+                            //           //                     .instance
+                            //           //                     .collection(
+                            //           //                         'users data')
+                            //           //                     .doc(id[index]);
+                            //           //             docuser.update({
+                            //           //               'status': '$selectedStatus'
+                            //           //             });
+                            //           //           } else {
+                            //           //             selectedStatus = hint;
+                            //           //           }
+                            //           //         });
+                            //           //       },
+                            //           //     ),
+                            //           //   ),
+                            //           // ),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //   ),
+                            // )
                           ],
                         ),
                       ),

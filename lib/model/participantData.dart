@@ -3,7 +3,7 @@ class Participants {
   String name;
   String father;
   String contactNo;
-  String address;
+  String place;
   String age;
 
   Participants({
@@ -11,7 +11,7 @@ class Participants {
     required this.name,
     required this.father,
     required this.contactNo,
-    required this.address,
+    required this.place,
     required this.age,
   });
 
@@ -20,7 +20,7 @@ class Participants {
         'name': name,
         'father': father,
         'contactNo': contactNo,
-        'address': address,
+        'place': place,
         'age': age,
       };
 
@@ -30,5 +30,5 @@ class Participants {
       father: json['father'],
       contactNo: json['contactNo'],
       age: json['age'],
-      address: json['address']);
+      place: json['place']);
 }

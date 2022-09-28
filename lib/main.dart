@@ -1,4 +1,4 @@
-import 'package:cognizium/Screens/sign_in.dart';
+import 'package:cognizium/Screens/login_check.dart';
 import 'package:cognizium/components/theme_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       title: 'Cognizium',
       debugShowCheckedModeBanner: false,
       theme: getApplicationTheme(context).copyWith(useMaterial3: true),
-      home: const SignIn(),
+      home: const LoginCheck(),
     );
   }
 }
