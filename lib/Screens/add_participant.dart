@@ -5,6 +5,7 @@ import 'package:cognizium/components/styles_manager.dart';
 import 'package:cognizium/controllers/controllers.dart';
 import 'package:cognizium/model/participantData.dart';
 import 'package:cognizium/utils/snack_bar.dart';
+import 'package:cognizium/widgets/check_cus_list.dart';
 import 'package:cognizium/widgets/title_widgets.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,229 +31,327 @@ class _AddParticipantState extends State<AddParticipant> {
       // 'Item4',
     ];
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-              child: TitleWidget(name: 'Zone'),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-              child: Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 10.0,
-                      color: Colors.grey.shade300,
-                      // offset: const Offset(5, 8.5),
-                    ),
-                  ],
-                ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                child: TitleWidget(name: 'Zone'),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                 child: Container(
-                  width: size.width * .3,
-                  height: 50,
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8)),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton2(
-                        icon: const Icon(
-                          Icons.keyboard_arrow_down,
-                          size: 35,
-                          color: ColorManager.black,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 10.0,
+                        color: Colors.grey.shade300,
+                        // offset: const Offset(5, 8.5),
+                      ),
+                    ],
+                  ),
+                  child: Container(
+                    width: size.width * .3,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton2(
+                          icon: const Icon(
+                            Icons.keyboard_arrow_down,
+                            size: 35,
+                            color: ColorManager.black,
+                          ),
+                          hint: Text('Enter Zone',
+                              style: getRegularStyle(
+                                  color:
+                                      const Color.fromARGB(255, 173, 173, 173),
+                                  fontSize: 15)),
+                          items: items
+                              .map((item) => DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Text(item,
+                                        style: getRegularStyle(
+                                            color: ColorManager.black,
+                                            fontSize: 15)),
+                                  ))
+                              .toList(),
+                          value: selectedValue,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedValue = value as String;
+                            });
+                          },
+                          buttonHeight: 40,
+                          // buttonWidth: 140,
+                          itemHeight: 40,
+                          buttonPadding: const EdgeInsets.fromLTRB(12, 0, 8, 0),
+                          // dropdownWidth: size.width,
+                          itemPadding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
                         ),
-                        hint: Text('Enter Zone',
-                            style: getRegularStyle(
-                                color: const Color.fromARGB(255, 173, 173, 173),
-                                fontSize: 15)),
-                        items: items
-                            .map((item) => DropdownMenuItem<String>(
-                                  value: item,
-                                  child: Text(item,
-                                      style: getRegularStyle(
-                                          color: ColorManager.black,
-                                          fontSize: 15)),
-                                ))
-                            .toList(),
-                        value: selectedValue,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedValue = value as String;
-                          });
-                        },
-                        buttonHeight: 40,
-                        // buttonWidth: 140,
-                        itemHeight: 40,
-                        buttonPadding: const EdgeInsets.fromLTRB(12, 0, 8, 0),
-                        // dropdownWidth: size.width,
-                        itemPadding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-              child: TitleWidget(name: 'Name'),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-              child: Container(
-                width: size.width * .3,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 10.0,
-                      color: Colors.grey.shade300,
-                      // offset: const Offset(5, 8.5),
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  // focusNode: nfocus,
-                  style: const TextStyle(),
-                  controller: nameController,
-                  decoration: InputDecoration(
-                      hintText: 'Enter Name',
-                      hintStyle: getRegularStyle(
-                          color: const Color.fromARGB(255, 173, 173, 173),
-                          fontSize: 15)),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                child: TitleWidget(name: 'Name'),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: Container(
+                  width: size.width * .3,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 10.0,
+                        color: Colors.grey.shade300,
+                        // offset: const Offset(5, 8.5),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    // focusNode: nfocus,
+                    style: const TextStyle(),
+                    controller: nameController,
+                    decoration: InputDecoration(
+                        hintText: 'Enter Name',
+                        hintStyle: getRegularStyle(
+                            color: const Color.fromARGB(255, 173, 173, 173),
+                            fontSize: 15)),
+                  ),
                 ),
               ),
-            ),
 
-            // * father
+              // * father
 
-            const Padding(
-              padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-              child: TitleWidget(name: 'Father'),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-              child: Container(
-                width: size.width * .3,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 10.0,
-                      color: Colors.grey.shade300,
-                      // offset: const Offset(5, 8.5),
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  // focusNode: nfocus,
-                  style: const TextStyle(),
-                  controller: fatherNameController,
-                  decoration: InputDecoration(
-                      hintText: "Enter Father's Name",
-                      hintStyle: getRegularStyle(
-                          color: const Color.fromARGB(255, 173, 173, 173),
-                          fontSize: 15)),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                child: TitleWidget(name: 'Father'),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: Container(
+                  width: size.width * .3,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 10.0,
+                        color: Colors.grey.shade300,
+                        // offset: const Offset(5, 8.5),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    // focusNode: nfocus,
+                    style: const TextStyle(),
+                    controller: fatherNameController,
+                    decoration: InputDecoration(
+                        hintText: "Enter Father's Name",
+                        hintStyle: getRegularStyle(
+                            color: const Color.fromARGB(255, 173, 173, 173),
+                            fontSize: 15)),
+                  ),
                 ),
               ),
-            ),
-            // * contact No
-            const Padding(
-              padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-              child: TitleWidget(name: 'Contact No'),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-              child: Container(
-                width: size.width * .3,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 10.0,
-                      color: Colors.grey.shade300,
-                      // offset: const Offset(5, 8.5),
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  // focusNode: nfocus,
-                  style: const TextStyle(),
-                  controller: contactNoController,
-                  decoration: InputDecoration(
-                      hintText: 'Contact No',
-                      hintStyle: getRegularStyle(
-                          color: const Color.fromARGB(255, 173, 173, 173),
-                          fontSize: 15)),
+              // * contact No
+              const Padding(
+                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                child: TitleWidget(name: 'Contact No'),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: Container(
+                  width: size.width * .3,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 10.0,
+                        color: Colors.grey.shade300,
+                        // offset: const Offset(5, 8.5),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    // focusNode: nfocus,
+                    style: const TextStyle(),
+                    controller: contactNoController,
+                    decoration: InputDecoration(
+                        hintText: 'Contact No',
+                        hintStyle: getRegularStyle(
+                            color: const Color.fromARGB(255, 173, 173, 173),
+                            fontSize: 15)),
+                  ),
                 ),
               ),
-            ),
-            // * Place
-            const Padding(
-              padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-              child: TitleWidget(name: 'Place'),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-              child: Container(
-                width: size.width * .3,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 10.0,
-                      color: Colors.grey.shade300,
-                      // offset: const Offset(5, 8.5),
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  // focusNode: nfocus,
-                  style: const TextStyle(),
-                  controller: addressController,
-                  decoration: InputDecoration(
-                      hintText: 'Enter Place',
-                      hintStyle: getRegularStyle(
-                          color: const Color.fromARGB(255, 173, 173, 173),
-                          fontSize: 15)),
+              // * Place
+              const Padding(
+                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                child: TitleWidget(name: 'Place'),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: Container(
+                  width: size.width * .3,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 10.0,
+                        color: Colors.grey.shade300,
+                        // offset: const Offset(5, 8.5),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    // focusNode: nfocus,
+                    style: const TextStyle(),
+                    controller: addressController,
+                    decoration: InputDecoration(
+                        hintText: 'Enter Place',
+                        hintStyle: getRegularStyle(
+                            color: const Color.fromARGB(255, 173, 173, 173),
+                            fontSize: 15)),
+                  ),
                 ),
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-              child: TitleWidget(name: 'Age'),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-              child: Container(
-                width: size.width * .3,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 10.0,
-                      color: Colors.grey.shade300,
-                      // offset: const Offset(5, 8.5),
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  // focusNode: nfocus,
-                  style: const TextStyle(),
-                  controller: ageController,
-                  decoration: InputDecoration(
-                      hintText: 'Enter Age',
-                      hintStyle: getRegularStyle(
-                          color: const Color.fromARGB(255, 173, 173, 173),
-                          fontSize: 15)),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                child: TitleWidget(name: 'Age'),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: Container(
+                  width: size.width * .3,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 10.0,
+                        color: Colors.grey.shade300,
+                        // offset: const Offset(5, 8.5),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    // focusNode: nfocus,
+                    style: const TextStyle(),
+                    controller: ageController,
+                    decoration: InputDecoration(
+                        hintText: 'Enter Age',
+                        hintStyle: getRegularStyle(
+                            color: const Color.fromARGB(255, 173, 173, 173),
+                            fontSize: 15)),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            ElevatedButton(
-                onPressed: addParticipant, child: const Text("Add Participant"))
-          ],
+              const SizedBox(
+                height: 15,
+              ),
+
+              // Row(
+              //   children: [
+              //     const Text("qira-ath"),
+              //     // Checkbox(value: true, onChanged: onChanged)
+              //   ],
+              // )
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    'Hi Zone Stage',
+                    style:
+                        getBoldtStyle(color: ColorManager.black, fontSize: 20),
+                  ),
+                  Text(
+                    'Hi Zone Non stage',
+                    style:
+                        getBoldtStyle(color: ColorManager.black, fontSize: 20),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: const [
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SerDrawerList(text: 'qira-ath'),
+                        SerDrawerList(text: 'hifz'),
+                        SerDrawerList(text: 'surf rile '),
+                        SerDrawerList(text: 'elocution malayalam '),
+                        SerDrawerList(text: 'elocution english'),
+                        SerDrawerList(text: 'elocution arabic '),
+                        SerDrawerList(text: 'mappilappattu'),
+                        SerDrawerList(text: 'arabic song '),
+                        SerDrawerList(text: 'madh song '),
+                        SerDrawerList(text: 'poem recitation'),
+                        SerDrawerList(text: 'group song '),
+                        SerDrawerList(text: 'swallal ilahu recitation'),
+                        SerDrawerList(text: 'mathrubhasha'),
+                        SerDrawerList(text: 'hikayath reading'),
+                        SerDrawerList(text: 'qawali'),
+                        SerDrawerList(text: 'debate'),
+                        SizedBox(
+                          height: 15,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      children: const [
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SerDrawerList(text: 'Essay Malayalam'),
+                        SerDrawerList(text: 'Essay english '),
+                        SerDrawerList(text: 'essay arabic'),
+                        SerDrawerList(text: 'translation (ara-mal)'),
+                        SerDrawerList(text: 'translation (eng-mal)'),
+                        SerDrawerList(text: 'prabhodhana rekha'),
+                        SerDrawerList(text: 'poem making malayalam '),
+                        SerDrawerList(text: 'story writing english'),
+                        SerDrawerList(text: 'story writing malayalam '),
+                        SerDrawerList(text: 'inthibaq'),
+                        SerDrawerList(text: 'slogan writing'),
+                        SerDrawerList(text: 'caption writing '),
+                        SerDrawerList(text: 'social tweet'),
+                        SerDrawerList(text: 'spot magazine'),
+                        SerDrawerList(text: 'survey tool '),
+                        SerDrawerList(text: 'water coloring '),
+                        SerDrawerList(text: 'calligraphy'),
+                        SerDrawerList(text: 'book review '),
+                        SerDrawerList(text: 'e-poster'),
+                        SerDrawerList(text: 'hivar'),
+                        SerDrawerList(text: 'pencil drawing '),
+                        SerDrawerList(text: 'poster designing '),
+                        SerDrawerList(text: 'book test '),
+                        SerDrawerList(text: 'feature writing '),
+                        SerDrawerList(text: 'motto making'),
+                        SizedBox(
+                          height: 15,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ), 
+              ElevatedButton(
+                  onPressed: addParticipant,
+                  child: const Text("Add Participant")),
+              const SizedBox(
+                height: 35,
+              ),
+            ],
+          ),
         ),
       ),
     );
