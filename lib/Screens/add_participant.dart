@@ -349,12 +349,18 @@ class _AddParticipantState extends State<AddParticipant> {
 
     // * adding events
     final stageData = provider.stage;
-    final programs = docUser.collection('Stage');
+    final programsStage = docUser.collection('Stage');
+
+    final offStageData = provider.offStage;
+    final programsOffStage = docUser.collection('offStage');
 
     try {
       await docUser.set(json);
       for (var element in stageData) {
-        programs.doc(element).set({"event": element});
+        programsStage.doc(element).set({"event": element});
+      }
+      for (var element in offStageData) {
+        programsOffStage.doc(element).set({"event": element});
       }
 
       await Navigator.pushAndRemoveUntil(context,

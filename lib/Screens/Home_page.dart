@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cognizium/Screens/add_participant.dart';
+import 'package:cognizium/Screens/programmesList.dart';
 import 'package:cognizium/Screens/sign_in.dart';
 import 'package:cognizium/model/participantData.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -86,6 +87,14 @@ class _DataState extends State<HomePage> {
             return ListView.builder(
               itemBuilder: (context, index) {
                 return InkWell(
+                  onTap: () {
+                    print(name![index]);
+                    Navigator.push(context, MaterialPageRoute(builder: (ctx) {
+                      return ProgrammesList(
+                        name: name[index],
+                      );
+                    }));
+                  },
                   // onLongPress: () {
                   //   print('hello');
                   //   print(id);
@@ -162,66 +171,6 @@ class _DataState extends State<HomePage> {
                                   child: SingleChildScrollView(
                                       child: Text(contactNo![index]))),
                             ),
-                            // Center(
-                            //   child: Container(
-                            //     width: size.width / 3.4,
-                            //     height: size.height / 10,
-                            //     decoration: BoxDecoration(
-                            //       border: Border.all(color: Colors.orange),
-                            //       borderRadius: BorderRadius.circular(15),
-                            //     ),
-                            //     child: Padding(
-                            //       padding:
-                            //           const EdgeInsets.fromLTRB(6, 0, 0, 3),
-                            //       child: Row(
-                            //         mainAxisAlignment: MainAxisAlignment.center,
-                            //         children: const [
-                            //           // Expanded(
-                            //           //   child: DropdownButtonHideUnderline(
-                            //           //     child: DropdownButton2<String>(
-                            //           //       value: status![index],
-                            //           //       dropdownMaxHeight: size.height * .3,
-                            //           //       isExpanded: true,
-                            //           //       hint: Text(hint),
-                            //           //       dropdownWidth: size.width / 3.5,
-                            //           //       disabledHint: Text(hint),
-                            //           //       items: statusList
-                            //           //           .map(
-                            //           //             (e) =>
-                            //           //                 DropdownMenuItem<String>(
-                            //           //               value: e,
-                            //           //               child: Text(e),
-                            //           //             ),
-                            //           //           )
-                            //           //           .toList(),
-                            //           //       onChanged: (v) {
-                            //           //         setState(() {
-                            //           //           if (v != null) {
-                            //           //             selectedStatus = v;
-                            //           //             print(selectedStatus);
-                            //           //             print(id![index]);
-                            //           //             final docuser =
-                            //           //                 FirebaseFirestore
-                            //           //                     .instance
-                            //           //                     .collection(
-                            //           //                         'users data')
-                            //           //                     .doc(id[index]);
-                            //           //             docuser.update({
-                            //           //               'status': '$selectedStatus'
-                            //           //             });
-                            //           //           } else {
-                            //           //             selectedStatus = hint;
-                            //           //           }
-                            //           //         });
-                            //           //       },
-                            //           //     ),
-                            //           //   ),
-                            //           // ),
-                            //         ],
-                            //       ),
-                            //     ),
-                            //   ),
-                            // )
                           ],
                         ),
                       ),
