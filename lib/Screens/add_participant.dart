@@ -4,12 +4,14 @@ import 'package:cognizium/components/color_manager.dart';
 import 'package:cognizium/components/styles_manager.dart';
 import 'package:cognizium/controllers/controllers.dart';
 import 'package:cognizium/model/participantData.dart';
+import 'package:cognizium/provider/data_provider.dart';
 import 'package:cognizium/utils/snack_bar.dart';
 import 'package:cognizium/widgets/check_cus_list.dart';
 import 'package:cognizium/widgets/title_widgets.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddParticipant extends StatefulWidget {
   const AddParticipant({Key? key}) : super(key: key);
@@ -279,8 +281,8 @@ class _AddParticipantState extends State<AddParticipant> {
                 children: [
                   Expanded(
                     child: Column(
-                      children: const [
-                        SizedBox(
+                      children: [
+                        const SizedBox(
                           height: 15,
                         ),
                         SerDrawerList(text: 'qira-ath'),
@@ -299,7 +301,7 @@ class _AddParticipantState extends State<AddParticipant> {
                         SerDrawerList(text: 'hikayath reading'),
                         SerDrawerList(text: 'qawali'),
                         SerDrawerList(text: 'debate'),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                       ],
@@ -307,43 +309,50 @@ class _AddParticipantState extends State<AddParticipant> {
                   ),
                   Expanded(
                     child: Column(
-                      children: const [
-                        SizedBox(
+                      children: [
+                        const SizedBox(
                           height: 15,
                         ),
-                        SerDrawerList(text: 'Essay Malayalam'),
-                        SerDrawerList(text: 'Essay english '),
-                        SerDrawerList(text: 'essay arabic'),
-                        SerDrawerList(text: 'translation (ara-mal)'),
-                        SerDrawerList(text: 'translation (eng-mal)'),
-                        SerDrawerList(text: 'prabhodhana rekha'),
-                        SerDrawerList(text: 'poem making malayalam '),
-                        SerDrawerList(text: 'story writing english'),
-                        SerDrawerList(text: 'story writing malayalam '),
-                        SerDrawerList(text: 'inthibaq'),
-                        SerDrawerList(text: 'slogan writing'),
-                        SerDrawerList(text: 'caption writing '),
-                        SerDrawerList(text: 'social tweet'),
-                        SerDrawerList(text: 'spot magazine'),
-                        SerDrawerList(text: 'survey tool '),
-                        SerDrawerList(text: 'water coloring '),
-                        SerDrawerList(text: 'calligraphy'),
-                        SerDrawerList(text: 'book review '),
-                        SerDrawerList(text: 'e-poster'),
-                        SerDrawerList(text: 'hivar'),
-                        SerDrawerList(text: 'pencil drawing '),
-                        SerDrawerList(text: 'poster designing '),
-                        SerDrawerList(text: 'book test '),
-                        SerDrawerList(text: 'feature writing '),
-                        SerDrawerList(text: 'motto making'),
-                        SizedBox(
+                        SerDrawerList(text: 'Essay Malayalam', isStage: false),
+                        SerDrawerList(text: 'Essay english ', isStage: false),
+                        SerDrawerList(text: 'essay arabic', isStage: false),
+                        SerDrawerList(
+                            text: 'translation (ara-mal)', isStage: false),
+                        SerDrawerList(
+                            text: 'translation (eng-mal)', isStage: false),
+                        SerDrawerList(
+                            text: 'prabhodhana rekha', isStage: false),
+                        SerDrawerList(
+                            text: 'poem making malayalam ', isStage: false),
+                        SerDrawerList(
+                            text: 'story writing english', isStage: false),
+                        SerDrawerList(
+                            text: 'story writing malayalam ', isStage: false),
+                        SerDrawerList(text: 'inthibaq', isStage: false),
+                        SerDrawerList(text: 'slogan writing', isStage: false),
+                        SerDrawerList(text: 'caption writing ', isStage: false),
+                        SerDrawerList(text: 'social tweet', isStage: false),
+                        SerDrawerList(text: 'spot magazine', isStage: false),
+                        SerDrawerList(text: 'survey tool ', isStage: false),
+                        SerDrawerList(text: 'water coloring ', isStage: false),
+                        SerDrawerList(text: 'calligraphy', isStage: false),
+                        SerDrawerList(text: 'book review ', isStage: false),
+                        SerDrawerList(text: 'e-poster', isStage: false),
+                        SerDrawerList(text: 'hivar', isStage: false),
+                        SerDrawerList(text: 'pencil drawing ', isStage: false),
+                        SerDrawerList(
+                            text: 'poster designing ', isStage: false),
+                        SerDrawerList(text: 'book test ', isStage: false),
+                        SerDrawerList(text: 'feature writing ', isStage: false),
+                        SerDrawerList(text: 'motto making', isStage: false),
+                        const SizedBox(
                           height: 15,
                         ),
                       ],
                     ),
                   )
                 ],
-              ), 
+              ),
               ElevatedButton(
                   onPressed: addParticipant,
                   child: const Text("Add Participant")),
@@ -358,6 +367,7 @@ class _AddParticipantState extends State<AddParticipant> {
   }
 
   addParticipant() async {
+    final provider = Provider.of<DataProvider>(context, listen: false);
     if (nameController.text.isEmpty) {
       showSnackBar("Enter a Name!", context,
           icon: Icons.email, color: Colors.white);
@@ -384,11 +394,27 @@ class _AddParticipantState extends State<AddParticipant> {
         place: addressController.text,
         age: ageController.text);
     final json = user.tojson();
+
+    // * adding events
+    final stageData = provider.stage;
+    final programs = docUser.collection('Stage');
+    print("Print Starts");
+    // print(provider.stage);
+
+    // final programs = docUser.collection('Stage').doc('Stage');
+
+    final jsonList = stageData.toSet();
     print(json);
     try {
       await docUser.set(json);
+      for (var element in stageData) {
+        print(element);
+        programs.doc(element).set({"event": element});
+      }
+      // await programs.set(stageData);
       print("Participant added");
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx) {
+      await Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (ctx) {
         return const HomePage();
       }), (route) => false);
     } on Exception {

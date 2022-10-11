@@ -1,8 +1,10 @@
-import 'package:cognizium/Screens/add_participant.dart';
+import 'package:cognizium/Screens/login_check.dart';
 import 'package:cognizium/components/theme_manager.dart';
+import 'package:cognizium/provider/data_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,11 +30,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Cognizium',
-      debugShowCheckedModeBanner: false,
-      theme: getApplicationTheme(context).copyWith(useMaterial3: true),
-      home: const AddParticipant(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => DataProvider()),
+      ],
+      child: MaterialApp(
+        title: 'Cognizium',
+        debugShowCheckedModeBanner: false,
+        theme: getApplicationTheme(context).copyWith(useMaterial3: true),
+        home: const LoginCheck(),
+      ),
     );
   }
 }
