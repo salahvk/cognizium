@@ -6,8 +6,12 @@ import 'package:cognizium/controllers/controllers.dart';
 import 'package:cognizium/model/participantData.dart';
 import 'package:cognizium/provider/data_provider.dart';
 import 'package:cognizium/utils/snack_bar.dart';
-import 'package:cognizium/widgets/check_cus_list.dart';
+import 'package:cognizium/widgets/dZone.dart';
+import 'package:cognizium/widgets/general.dart';
+import 'package:cognizium/widgets/hizone.dart';
+import 'package:cognizium/widgets/pZone.dart';
 import 'package:cognizium/widgets/title_widgets.dart';
+import 'package:cognizium/widgets/zone_title.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -255,104 +259,53 @@ class _AddParticipantState extends State<AddParticipant> {
               const SizedBox(
                 height: 15,
               ),
+// * Hizone Programs
+              selectedValue == 'Hi Zone'
+                  ? Column(
+                      children: [
+                        ZoneTitle(
+                            title1: 'Hi Zone Stage',
+                            title2: 'Hi Zone off stage'),
+                        const HizoneProgramsList(),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                      ],
+                    )
+                  : Container(),
 
-              // Row(
-              //   children: [
-              //     const Text("qira-ath"),
-              //     // Checkbox(value: true, onChanged: onChanged)
-              //   ],
-              // )
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    'Hi Zone Stage',
-                    style:
-                        getBoldtStyle(color: ColorManager.black, fontSize: 20),
-                  ),
-                  Text(
-                    'Hi Zone Non stage',
-                    style:
-                        getBoldtStyle(color: ColorManager.black, fontSize: 20),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
+// * Dzone Programs
+              selectedValue == 'D Zone'
+                  ? Column(
                       children: [
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        SerDrawerList(text: 'qira-ath'),
-                        SerDrawerList(text: 'hifz'),
-                        SerDrawerList(text: 'surf rile '),
-                        SerDrawerList(text: 'elocution malayalam '),
-                        SerDrawerList(text: 'elocution english'),
-                        SerDrawerList(text: 'elocution arabic '),
-                        SerDrawerList(text: 'mappilappattu'),
-                        SerDrawerList(text: 'arabic song '),
-                        SerDrawerList(text: 'madh song '),
-                        SerDrawerList(text: 'poem recitation'),
-                        SerDrawerList(text: 'group song '),
-                        SerDrawerList(text: 'swallal ilahu recitation'),
-                        SerDrawerList(text: 'mathrubhasha'),
-                        SerDrawerList(text: 'hikayath reading'),
-                        SerDrawerList(text: 'qawali'),
-                        SerDrawerList(text: 'debate'),
+                        ZoneTitle(
+                            title1: 'D Zone Stage', title2: 'D Zone off stage'),
+                        const DzoneProgramsList(),
                         const SizedBox(
                           height: 15,
                         ),
                       ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
+                    )
+                  : Container(),
+
+// * Pzone Programs
+              selectedValue == 'P Zone'
+                  ? Column(
                       children: [
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        SerDrawerList(text: 'Essay Malayalam', isStage: false),
-                        SerDrawerList(text: 'Essay english ', isStage: false),
-                        SerDrawerList(text: 'essay arabic', isStage: false),
-                        SerDrawerList(
-                            text: 'translation (ara-mal)', isStage: false),
-                        SerDrawerList(
-                            text: 'translation (eng-mal)', isStage: false),
-                        SerDrawerList(
-                            text: 'prabhodhana rekha', isStage: false),
-                        SerDrawerList(
-                            text: 'poem making malayalam ', isStage: false),
-                        SerDrawerList(
-                            text: 'story writing english', isStage: false),
-                        SerDrawerList(
-                            text: 'story writing malayalam ', isStage: false),
-                        SerDrawerList(text: 'inthibaq', isStage: false),
-                        SerDrawerList(text: 'slogan writing', isStage: false),
-                        SerDrawerList(text: 'caption writing ', isStage: false),
-                        SerDrawerList(text: 'social tweet', isStage: false),
-                        SerDrawerList(text: 'spot magazine', isStage: false),
-                        SerDrawerList(text: 'survey tool ', isStage: false),
-                        SerDrawerList(text: 'water coloring ', isStage: false),
-                        SerDrawerList(text: 'calligraphy', isStage: false),
-                        SerDrawerList(text: 'book review ', isStage: false),
-                        SerDrawerList(text: 'e-poster', isStage: false),
-                        SerDrawerList(text: 'hivar', isStage: false),
-                        SerDrawerList(text: 'pencil drawing ', isStage: false),
-                        SerDrawerList(
-                            text: 'poster designing ', isStage: false),
-                        SerDrawerList(text: 'book test ', isStage: false),
-                        SerDrawerList(text: 'feature writing ', isStage: false),
-                        SerDrawerList(text: 'motto making', isStage: false),
+                        ZoneTitle(
+                            title1: 'P Zone Stage', title2: 'P Zone off stage'),
+                        const PzoneProgramsList(),
                         const SizedBox(
                           height: 15,
                         ),
                       ],
-                    ),
-                  )
-                ],
-              ),
+                    )
+                  : Container(),
+
+              //
+
+              ZoneTitle(title1: 'General Stage', title2: 'General off stage'),
+              const GeneralProgramsList(),
               ElevatedButton(
                   onPressed: addParticipant,
                   child: const Text("Add Participant")),
@@ -371,21 +324,20 @@ class _AddParticipantState extends State<AddParticipant> {
     if (nameController.text.isEmpty) {
       showSnackBar("Enter a Name!", context,
           icon: Icons.email, color: Colors.white);
+      return;
     } else if (addressController.text.isEmpty) {
       showSnackBar("Enter a place!", context,
           icon: Icons.email, color: Colors.white);
+      return;
     }
 
     final authUser = FirebaseAuth.instance.currentUser;
-    print(authUser!.email);
-    print(authUser.uid);
     final docUser = FirebaseFirestore.instance
-        .collection(authUser.email!)
+        .collection(authUser!.email!)
         .doc(authUser.uid)
         .collection('Participants')
         .doc(nameController.text);
-    print(authUser.email);
-    print(authUser.uid);
+
     final user = Participants(
         zone: selectedValue ?? '',
         name: nameController.text,
@@ -398,21 +350,13 @@ class _AddParticipantState extends State<AddParticipant> {
     // * adding events
     final stageData = provider.stage;
     final programs = docUser.collection('Stage');
-    print("Print Starts");
-    // print(provider.stage);
 
-    // final programs = docUser.collection('Stage').doc('Stage');
-
-    final jsonList = stageData.toSet();
-    print(json);
     try {
       await docUser.set(json);
       for (var element in stageData) {
-        print(element);
         programs.doc(element).set({"event": element});
       }
-      // await programs.set(stageData);
-      print("Participant added");
+
       await Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (ctx) {
         return const HomePage();
