@@ -5,9 +5,11 @@ import 'package:provider/provider.dart';
 class SerDrawerList extends StatefulWidget {
   final String text;
   bool? isStage;
+  bool? isgeneral = false;
   // GestureTapCallback? onTap;
 
-  SerDrawerList({Key? key, required this.text, this.isStage}) : super(key: key);
+  SerDrawerList({Key? key, required this.text, this.isStage, this.isgeneral})
+      : super(key: key);
 
   @override
   State<SerDrawerList> createState() => _SerDrawerListState();
@@ -23,36 +25,49 @@ class _SerDrawerListState extends State<SerDrawerList> {
       height: 30,
       child: InkWell(
         onTap: () {
-          // if (provider.stage.length == 5) {
-          //   return;
-          // }
           setState(() {
             isTickSelected = !isTickSelected;
           });
-          if (isTickSelected) {
-            if (widget.isStage != false) {
-              provider.stage.add(widget.text);
-            } else if (widget.isStage == false) {
-              provider.offStage.add(widget.text);
-              // print(provider.offStage);
-            }
-            // print(provider.stage);
-          } else {
-            if (widget.isStage != false) {
-              provider.stage.contains(widget.text)
-                  ? provider.stage.remove(widget.text)
-                  : null;
+          if (widget.isgeneral == true) {
+            if (isTickSelected) {
+              if (widget.isStage != false) {
+                provider.gstage.add(widget.text);
+              } else if (widget.isStage == false) {
+                provider.goffstage.add(widget.text);
+              }
             } else {
-              provider.offStage.contains(widget.text)
-                  ? provider.offStage.remove(widget.text)
-                  : null;
+              if (widget.isStage != false) {
+                provider.gstage.contains(widget.text)
+                    ? provider.gstage.remove(widget.text)
+                    : null;
+              } else {
+                provider.goffstage.contains(widget.text)
+                    ? provider.goffstage.remove(widget.text)
+                    : null;
+              }
             }
-
-            // print(provider.stage);
-            // print(provider.offStage);
+          } else {
+            if (isTickSelected) {
+              if (widget.isStage != false) {
+                provider.stage.add(widget.text);
+              } else if (widget.isStage == false) {
+                provider.offStage.add(widget.text);
+              }
+            } else {
+              if (widget.isStage != false) {
+                provider.stage.contains(widget.text)
+                    ? provider.stage.remove(widget.text)
+                    : null;
+              } else {
+                provider.offStage.contains(widget.text)
+                    ? provider.offStage.remove(widget.text)
+                    : null;
+              }
+            }
           }
 
-          // print(provider.offStage);
+          print(provider.offStage);
+          print(provider.stage);
         },
         child: ListTile(
           title: Row(
