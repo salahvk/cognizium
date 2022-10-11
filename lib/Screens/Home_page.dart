@@ -3,6 +3,7 @@ import 'package:cognizium/Screens/add_participant.dart';
 import 'package:cognizium/Screens/programmesList.dart';
 import 'package:cognizium/Screens/sign_in.dart';
 import 'package:cognizium/model/participantData.dart';
+import 'package:cognizium/utils/diologue.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -95,17 +96,16 @@ class _DataState extends State<HomePage> {
                       );
                     }));
                   },
-                  // onLongPress: () {
-                  //   print('hello');
-                  //   print(id);
+                  onLongPress: () {
+                    print('hello');
 
-                  //   showDialog(
-                  //       context: context,
-                  //       builder: (context) => DialogueBox(
-                  //             id: id![index],
-                  //           ),
-                  //       barrierDismissible: false);
-                  // },
+                    showDialog(
+                        context: context,
+                        builder: (context) => DialogueBox(
+                              id: name![index],
+                            ),
+                        barrierDismissible: false);
+                  },
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
                     child: Container(

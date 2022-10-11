@@ -327,9 +327,15 @@ class _AddParticipantState extends State<AddParticipant> {
       return;
     } else if (addressController.text.isEmpty) {
       showSnackBar("Enter a place!", context,
-          icon: Icons.email, color: Colors.white);
+          icon: Icons.place, color: Colors.white);
       return;
     }
+    //  else if (provider.stage.length > 4) {
+    //   print(provider.stage);
+    //   showSnackBar("Stage Items cant exceed 4!", context,
+    //       icon: Icons.person, color: Colors.white);
+    //   return;
+    // }
 
     final authUser = FirebaseAuth.instance.currentUser;
     final docUser = FirebaseFirestore.instance
