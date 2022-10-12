@@ -334,19 +334,19 @@ class _AddParticipantState extends State<AddParticipant> {
       showSnackBar("Stage Items cant exceed 4!", context,
           icon: Icons.person, color: Colors.white);
       return;
-    } else if (provider.stage.length > 4 && selectedValue == 'Hi Zone') {
+    } else if (provider.offStage.length > 4 && selectedValue == 'Hi Zone') {
       print(provider.stage);
       showSnackBar("Hi Zone off Stage Items cant exceed 4!", context,
           icon: Icons.person, color: Colors.white);
       return;
-    } else if (provider.stage.length > 5 && selectedValue == 'D Zone') {
+    } else if (provider.offStage.length > 5 && selectedValue == 'D Zone') {
       print(provider.stage);
-      showSnackBar("D Zone off Stage Items cant exceed 4!", context,
+      showSnackBar("D Zone off Stage Items cant exceed 5!", context,
           icon: Icons.person, color: Colors.white);
       return;
-    } else if (provider.stage.length > 6 && selectedValue == 'P Zone') {
+    } else if (provider.offStage.length > 6 && selectedValue == 'P Zone') {
       print(provider.stage);
-      showSnackBar("P Zone off Stage Items cant exceed 4!", context,
+      showSnackBar("P Zone off Stage Items cant exceed 6!", context,
           icon: Icons.person, color: Colors.white);
       return;
     }
