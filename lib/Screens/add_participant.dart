@@ -329,13 +329,27 @@ class _AddParticipantState extends State<AddParticipant> {
       showSnackBar("Enter a place!", context,
           icon: Icons.place, color: Colors.white);
       return;
+    } else if (provider.stage.length > 4) {
+      print(provider.stage);
+      showSnackBar("Stage Items cant exceed 4!", context,
+          icon: Icons.person, color: Colors.white);
+      return;
+    } else if (provider.stage.length > 4 && selectedValue == 'Hi Zone') {
+      print(provider.stage);
+      showSnackBar("Hi Zone off Stage Items cant exceed 4!", context,
+          icon: Icons.person, color: Colors.white);
+      return;
+    } else if (provider.stage.length > 5 && selectedValue == 'D Zone') {
+      print(provider.stage);
+      showSnackBar("D Zone off Stage Items cant exceed 4!", context,
+          icon: Icons.person, color: Colors.white);
+      return;
+    } else if (provider.stage.length > 6 && selectedValue == 'P Zone') {
+      print(provider.stage);
+      showSnackBar("P Zone off Stage Items cant exceed 4!", context,
+          icon: Icons.person, color: Colors.white);
+      return;
     }
-    //  else if (provider.stage.length > 4) {
-    //   print(provider.stage);
-    //   showSnackBar("Stage Items cant exceed 4!", context,
-    //       icon: Icons.person, color: Colors.white);
-    //   return;
-    // }
 
     final authUser = FirebaseAuth.instance.currentUser;
     final docUser = FirebaseFirestore.instance
@@ -360,6 +374,14 @@ class _AddParticipantState extends State<AddParticipant> {
     final offStageData = provider.offStage;
     final programsOffStage = docUser.collection('offStage');
 
+    // * general
+
+    final gstageData = provider.gstage;
+    final gprogramsStage = docUser.collection('gStage');
+
+    final goffStageData = provider.goffstage;
+    final gprogramsOffStage = docUser.collection('goffStage');
+
     try {
       await docUser.set(json);
       for (var element in stageData) {
@@ -368,6 +390,14 @@ class _AddParticipantState extends State<AddParticipant> {
       for (var element in offStageData) {
         programsOffStage.doc(element).set({"event": element});
       }
+      for (var element in gstageData) {
+        gprogramsStage.doc(element).set({"event": element});
+      }
+      for (var element in goffStageData) {
+        gprogramsOffStage.doc(element).set({"event": element});
+      }
+
+      provider.cleanList();
 
       await Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (ctx) {

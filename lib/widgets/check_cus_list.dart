@@ -65,9 +65,15 @@ class _SerDrawerListState extends State<SerDrawerList> {
               }
             }
           }
-
-          print(provider.offStage);
-          print(provider.stage);
+          // print("offstage");
+          // print(provider.offStage);
+          // print("Stage");
+          // print(provider.stage);
+          // print("general offstage");
+          // print(provider.goffstage);
+          // print("general Stage");
+          // print(provider.gstage);
+          // print('____________________________');
         },
         child: ListTile(
           title: Row(

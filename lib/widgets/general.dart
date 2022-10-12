@@ -16,23 +16,25 @@ class GeneralProgramsList extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              SerDrawerList(text: 'Paper presentation -(usoolul fiqh)'),
-              SerDrawerList(text: 'Paper presentation-(quran)'),
-              SerDrawerList(text: 'Muathamar '),
-              SerDrawerList(text: 'burda aashayavishkaram'),
-              SerDrawerList(text: 'Ismul jalala'),
-              SerDrawerList(text: 'Thadrees'),
-              SerDrawerList(text: 'Aashaya samvadam'),
-              SerDrawerList(text: 'Book discussion '),
-              SerDrawerList(text: 'Lecturing'),
-              SerDrawerList(text: 'Fiqh discussion'),
-              SerDrawerList(text: 'Seera parayanam'),
-              SerDrawerList(text: 'Burda'),
-              SerDrawerList(text: 'Musha’ara'),
-              SerDrawerList(text: 'Viplava ganam'),
-              SerDrawerList(text: 'Nabiyutharam'),
-              SerDrawerList(text: 'Inspiration talk'),
-              SerDrawerList(text: 'Panel discussion '),
+              SerDrawerList(
+                  text: 'Paper presentation -(usoolul fiqh)', isgeneral: true),
+              SerDrawerList(
+                  text: 'Paper presentation-(quran)', isgeneral: true),
+              SerDrawerList(text: 'Muathamar ', isgeneral: true),
+              SerDrawerList(text: 'burda aashayavishkaram', isgeneral: true),
+              SerDrawerList(text: 'Ismul jalala', isgeneral: true),
+              SerDrawerList(text: 'Thadrees', isgeneral: true),
+              SerDrawerList(text: 'Aashaya samvadam', isgeneral: true),
+              SerDrawerList(text: 'Book discussion ', isgeneral: true),
+              SerDrawerList(text: 'Lecturing', isgeneral: true),
+              SerDrawerList(text: 'Fiqh discussion', isgeneral: true),
+              SerDrawerList(text: 'Seera parayanam', isgeneral: true),
+              SerDrawerList(text: 'Burda', isgeneral: true),
+              SerDrawerList(text: 'Musha’ara', isgeneral: true),
+              SerDrawerList(text: 'Viplava ganam', isgeneral: true),
+              SerDrawerList(text: 'Nabiyutharam', isgeneral: true),
+              SerDrawerList(text: 'Inspiration talk', isgeneral: true),
+              SerDrawerList(text: 'Panel discussion ', isgeneral: true),
               const SizedBox(
                 height: 15,
               ),
@@ -45,27 +47,45 @@ class GeneralProgramsList extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              SerDrawerList(text: 'Pusthaka rajana', isStage: false),
-              SerDrawerList(text: 'Magazine', isStage: false),
-              SerDrawerList(text: 'Moulid rajana', isStage: false),
-              SerDrawerList(text: 'Malappatt rajana', isStage: false),
-              SerDrawerList(text: 'Thasneef', isStage: false),
-              SerDrawerList(text: 'Research ', isStage: false),
-              SerDrawerList(text: 'Project ', isStage: false),
-              SerDrawerList(text: 'novel', isStage: false),
-              SerDrawerList(text: 'Social tweet (Malayalam)', isStage: false),
-              SerDrawerList(text: 'Announcement creation', isStage: false),
-              SerDrawerList(text: 'Cartoon', isStage: false),
-              SerDrawerList(text: 'Poster designing ', isStage: false),
-              SerDrawerList(text: 'Status vedio', isStage: false),
-              SerDrawerList(text: 'Dictionary making', isStage: false),
-              SerDrawerList(text: 'Typography ', isStage: false),
-              SerDrawerList(text: 'Magazine layout ', isStage: false),
-              SerDrawerList(text: 'Chumareyutth', isStage: false),
-              SerDrawerList(text: 'Counter writing ', isStage: false),
-              SerDrawerList(text: 'PPT contest ', isStage: false),
-              SerDrawerList(text: 'Digital traveling ', isStage: false),
-              SerDrawerList(text: 'Typing', isStage: false),
+              SerDrawerList(
+                  text: 'Pusthaka rajana', isStage: false, isgeneral: true),
+              SerDrawerList(text: 'Magazine', isStage: false, isgeneral: true),
+              SerDrawerList(
+                  text: 'Moulid rajana', isStage: false, isgeneral: true),
+              SerDrawerList(
+                  text: 'Malappatt rajana', isStage: false, isgeneral: true),
+              SerDrawerList(text: 'Thasneef', isStage: false, isgeneral: true),
+              SerDrawerList(text: 'Research ', isStage: false, isgeneral: true),
+              SerDrawerList(text: 'Project ', isStage: false, isgeneral: true),
+              SerDrawerList(text: 'novel', isStage: false, isgeneral: true),
+              SerDrawerList(
+                  text: 'Social tweet (Malayalam)',
+                  isStage: false,
+                  isgeneral: true),
+              SerDrawerList(
+                  text: 'Announcement creation',
+                  isStage: false,
+                  isgeneral: true),
+              SerDrawerList(text: 'Cartoon', isStage: false, isgeneral: true),
+              SerDrawerList(
+                  text: 'Poster designing ', isStage: false, isgeneral: true),
+              SerDrawerList(
+                  text: 'Status vedio', isStage: false, isgeneral: true),
+              SerDrawerList(
+                  text: 'Dictionary making', isStage: false, isgeneral: true),
+              SerDrawerList(
+                  text: 'Typography ', isStage: false, isgeneral: true),
+              SerDrawerList(
+                  text: 'Magazine layout ', isStage: false, isgeneral: true),
+              SerDrawerList(
+                  text: 'Chumareyutth', isStage: false, isgeneral: true),
+              SerDrawerList(
+                  text: 'Counter writing ', isStage: false, isgeneral: true),
+              SerDrawerList(
+                  text: 'PPT contest ', isStage: false, isgeneral: true),
+              SerDrawerList(
+                  text: 'Digital traveling ', isStage: false, isgeneral: true),
+              SerDrawerList(text: 'Typing', isStage: false, isgeneral: true),
               const SizedBox(
                 height: 15,
               ),
