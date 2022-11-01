@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: getApplicationTheme(context).copyWith(useMaterial3: true),
         home: const LoginCheck(),
+        // home: const AdminHomePage(),
       ),
     );
   }

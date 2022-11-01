@@ -336,6 +336,7 @@ class _AddParticipantState extends State<AddParticipant> {
       return;
     } else if (provider.offStage.length > 4 && selectedValue == 'Hi Zone') {
       print(provider.stage);
+
       showSnackBar("Hi Zone off Stage Items cant exceed 4!", context,
           icon: Icons.person, color: Colors.white);
       return;
@@ -382,19 +383,65 @@ class _AddParticipantState extends State<AddParticipant> {
     final goffStageData = provider.goffstage;
     final gprogramsOffStage = docUser.collection('goffStage');
 
+    final programmes = FirebaseFirestore.instance.collection('programmes');
+
+    // .collection('Participants')
+    // .doc(nameController.text);
+    List list = [];
+
+    final participantData = [
+      {
+        "name": nameController.text,
+        'place': addressController.text,
+      }
+    ];
+
     try {
       await docUser.set(json);
       for (var element in stageData) {
         programsStage.doc(element).set({"event": element});
+
+        programmes.doc('${selectedValue}_stage_$element').update({
+          "participant": FieldValue.arrayUnion(participantData)
+        }).onError((error, stackTrace) {
+          programmes.doc('${selectedValue}_stage_$element').set({
+            "participant": FieldValue.arrayUnion(participantData),
+            "programme": '${selectedValue}_stage_$element'
+          });
+        });
       }
       for (var element in offStageData) {
         programsOffStage.doc(element).set({"event": element});
+        programmes.doc('${selectedValue}_offStage_$element').update({
+          "participant": FieldValue.arrayUnion(participantData)
+        }).onError((error, stackTrace) {
+          programmes.doc('${selectedValue}_offStage_$element').set({
+            "participant": FieldValue.arrayUnion(participantData),
+            "programme": '${selectedValue}_offStage_$element'
+          });
+        });
       }
       for (var element in gstageData) {
         gprogramsStage.doc(element).set({"event": element});
+        programmes.doc('general_stage_$element').update({
+          "participant": FieldValue.arrayUnion(participantData)
+        }).onError((error, stackTrace) {
+          programmes.doc('general_stage_$element').set({
+            "participant": FieldValue.arrayUnion(participantData),
+            "programme": 'general_stage_$element'
+          });
+        });
       }
       for (var element in goffStageData) {
         gprogramsOffStage.doc(element).set({"event": element});
+        programmes.doc('general_offStage_$element').update({
+          "participant": FieldValue.arrayUnion(participantData)
+        }).onError((error, stackTrace) {
+          programmes.doc('general_offStage_$element').set({
+            "participant": FieldValue.arrayUnion(participantData),
+            "programme": 'general_offStage_$element'
+          });
+        });
       }
 
       provider.cleanList();

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cognizium/Screens/Admin/admin_home_page.dart';
 import 'package:cognizium/Screens/Home_page.dart';
 import 'package:cognizium/components/color_manager.dart';
 import 'package:cognizium/components/styles_manager.dart';
@@ -322,7 +323,14 @@ class _SignInState extends State<SignIn> {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: emailcontroller.text, password: passcontroller.text);
         print('Sign in');
+
         // getAdminDetails();
+        if (emailcontroller.text == 'cogniziumofficial@gmail.com') {
+          Navigator.push(context, MaterialPageRoute(builder: (ctx) {
+            return const AdminHomePage();
+          }));
+          return;
+        }
         getUserDetails();
         // Timer(const Duration(seconds: 2), () {
         //   print('How many');
