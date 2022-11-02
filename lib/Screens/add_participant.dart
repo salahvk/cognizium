@@ -26,6 +26,13 @@ class AddParticipant extends StatefulWidget {
 
 class _AddParticipantState extends State<AddParticipant> {
   String? selectedValue;
+  String? team;
+  @override
+  void initState() {
+    super.initState();
+    getTeam();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -387,12 +394,12 @@ class _AddParticipantState extends State<AddParticipant> {
 
     // .collection('Participants')
     // .doc(nameController.text);
-    List list = [];
 
     final participantData = [
       {
         "name": nameController.text,
         'place': addressController.text,
+        'team': team
       }
     ];
 
@@ -453,5 +460,17 @@ class _AddParticipantState extends State<AddParticipant> {
     } on Exception {
       print('Some exception occured');
     }
+  }
+
+  getTeam() {
+    final authUser = FirebaseAuth.instance.currentUser;
+    final docUser = FirebaseFirestore.instance
+        .collection(authUser!.email!)
+        .doc(authUser.uid)
+        .get()
+        .then((value) {
+      team = value.get('team');
+      print(team);
+    });
   }
 }

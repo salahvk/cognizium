@@ -30,36 +30,36 @@ ThemeData getApplicationTheme(BuildContext context) {
         // backgroundColor: ColorManager.primary,
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
         textStyle: getRegularStyle(
-          color: ColorManager.black,
+          color: ColorManager.whiteText,
         ),
       )),
       textTheme: TextTheme(
         headline1: getBoldtStyle(
-          color: ColorManager.black,
+          color: ColorManager.whiteText,
           fontSize: 24,
         ),
         headline2: getMediumtStyle(
-          color: ColorManager.black,
+          color: ColorManager.whiteText,
           fontSize: 28,
         ),
         headline3: getMediumtStyle(
-          color: ColorManager.black,
+          color: ColorManager.whiteText,
           fontSize: 20,
         ),
         subtitle1: getMediumtStyle(
-          color: ColorManager.black,
+          color: ColorManager.whiteText,
           fontSize: 18,
         ),
         subtitle2: getRegularStyle(
-          color: ColorManager.black,
+          color: ColorManager.whiteText,
           fontSize: 16,
         ),
         bodyText1: getRegularStyle(
-          color: ColorManager.black,
+          color: ColorManager.whiteText,
           fontSize: 14,
         ),
         bodyText2: getRegularStyle(
-          color: ColorManager.black,
+          color: ColorManager.whiteText,
           fontSize: 14,
         ),
       ),

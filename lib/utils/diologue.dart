@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cognizium/components/color_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -21,6 +22,7 @@ class DialogueBox extends StatelessWidget {
               "Delete the field!",
               style: TextStyle(
                   fontFamily: "Open",
+                  color: ColorManager.background,
                   fontWeight: FontWeight.bold,
                   fontSize: 18),
             ),
@@ -31,7 +33,10 @@ class DialogueBox extends StatelessWidget {
             const Text(
               "If you delete the data it will get removed from all the users",
               textAlign: TextAlign.center,
-              style: TextStyle(fontFamily: "Open", fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontFamily: "Open",
+                  fontWeight: FontWeight.bold,
+                  color: ColorManager.background),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

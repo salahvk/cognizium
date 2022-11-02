@@ -26,19 +26,17 @@ class ProgrammeModel {
 
 class Participants2 {
   String name;
-
   String place;
+  String team;
 
   Participants2({
     required this.name,
     required this.place,
+    required this.team,
   });
 
-  Map<String, dynamic> tojson() => {
-        'name': name,
-        'place': place,
-      };
+  Map<String, dynamic> tojson() => {'name': name, 'place': place, 'team': team};
 
-  static Participants2 fromJson(Map<String, dynamic> json) =>
-      Participants2(name: json['name'], place: json['place']);
+  static Participants2 fromJson(Map<String, dynamic> json) => Participants2(
+      name: json['name'], place: json['place'], team: json['team']);
 }

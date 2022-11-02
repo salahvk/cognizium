@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cognizium/Screens/add_participant.dart';
 import 'package:cognizium/Screens/programmesList.dart';
 import 'package:cognizium/Screens/sign_in.dart';
+import 'package:cognizium/components/color_manager.dart';
 import 'package:cognizium/model/participantData.dart';
 import 'package:cognizium/utils/diologue.dart';
+import 'package:cognizium/widgets/home_category.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +18,16 @@ class HomePage extends StatefulWidget {
 
 class _DataState extends State<HomePage> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      getTeam();
+    });
+  }
+
+  String? team;
+  @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
     final size = MediaQuery.of(context).size;
@@ -25,7 +37,10 @@ class _DataState extends State<HomePage> {
     String hint = 'Select item';
     return Scaffold(
       appBar: AppBar(
-        title: Text('Welcome ${user.email} '),
+        title: Text(
+          'Welcome $team ',
+          style: const TextStyle(color: ColorManager.whiteColor),
+        ),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         actions: [
@@ -120,57 +135,26 @@ class _DataState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              width: size.width * .15,
+                              width: size.width * .05,
                               height: size.height / 10,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.white)),
-                              child: Center(child: Text(zone![index])),
-                            ),
-                            Container(
-                              width: size.width * .15,
-                              height: size.height / 10,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.white)),
+                              decoration: const BoxDecoration(
+                                  // border: Border.all(color: Colors.white)
+                                  ),
                               child: Center(
-                                  child: SingleChildScrollView(
-                                      child: Text(name![index]))),
+                                  child: Text('${index + 1}'.toString())),
                             ),
-                            Container(
-                              width: size.width * .15,
-                              height: size.height / 10,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.white)),
-                              child: Center(
-                                  child: SingleChildScrollView(
-                                      child: Text(place![index]))),
-                            ),
-                            Container(
-                              width: size.width * .15,
-                              height: size.height / 10,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.white)),
-                              child: Center(
-                                  child: SingleChildScrollView(
-                                      child: Text(age![index]))),
-                            ),
-                            Container(
-                              width: size.width * .15,
-                              height: size.height / 10,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.white)),
-                              child: Center(
-                                  child: SingleChildScrollView(
-                                      child: Text(father![index]))),
-                            ),
-                            Container(
-                              width: size.width * .15,
-                              height: size.height / 10,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.white)),
-                              child: Center(
-                                  child: SingleChildScrollView(
-                                      child: Text(contactNo![index]))),
-                            ),
+                            HomeCategory(
+                                size: size, age: age, text: zone![index]),
+                            HomeCategory(
+                                size: size, age: age, text: name![index]),
+                            HomeCategory(
+                                size: size, age: age, text: place![index]),
+                            HomeCategory(
+                                size: size, age: age, text: age![index]),
+                            HomeCategory(
+                                size: size, age: age, text: father![index]),
+                            HomeCategory(
+                                size: size, age: age, text: contactNo![index]),
                           ],
                         ),
                       ),
@@ -200,5 +184,18 @@ class _DataState extends State<HomePage> {
         .map((snapshot) => snapshot.docs
             .map((doc) => Participants.fromJson(doc.data()))
             .toList());
+  }
+
+  getTeam() {
+    final authUser = FirebaseAuth.instance.currentUser;
+    final docUser = FirebaseFirestore.instance
+        .collection(authUser!.email!)
+        .doc(authUser.uid)
+        .get()
+        .then((value) {
+      team = value.get('team');
+      print(team);
+      setState(() {});
+    });
   }
 }

@@ -43,7 +43,16 @@ class _ParticipantListState extends State<ParticipantList> {
                       onPressed: () {
                         // print(programmeName);
                       },
-                      child: Text(data[index]['name'] ?? ''));
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(data[index]['name'] ?? ''),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(data[index]['team'] ?? '')
+                        ],
+                      ));
                   // child: const Text(''));
                 },
                 itemCount: data.length,
@@ -61,7 +70,7 @@ class _ParticipantListState extends State<ParticipantList> {
       length = participantData.length;
       // print(length);
 
-      for (int i = 0; i < length - 1; i++) {
+      for (int i = 0; i <= length - 1; i++) {
         data.add(participantData[i]);
       }
       print(data);
