@@ -1,68 +1,54 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cognizium/Screens/add_participant.dart';
 import 'package:cognizium/Screens/programmesList.dart';
-import 'package:cognizium/Screens/sign_in.dart';
-import 'package:cognizium/components/color_manager.dart';
 import 'package:cognizium/model/participantData.dart';
-import 'package:cognizium/utils/diologue.dart';
 import 'package:cognizium/widgets/home_category.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class TeamDetails extends StatefulWidget {
+  final String email;
+  final String uid;
+  const TeamDetails({super.key, required this.email, required this.uid});
 
   @override
-  State<HomePage> createState() => _DataState();
+  State<TeamDetails> createState() => _TeamDetailsState();
 }
 
-class _DataState extends State<HomePage> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      getTeam();
-    });
-  }
-
-  String? team;
+class _TeamDetailsState extends State<TeamDetails> {
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser!;
     final size = MediaQuery.of(context).size;
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Welcome $team ',
-          style: const TextStyle(color: ColorManager.whiteColor),
-        ),
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
-                onPressed: () {
-                  FirebaseAuth.instance.signOut();
-                  Navigator.pushAndRemoveUntil(context,
-                      MaterialPageRoute(builder: (ctx) {
-                    return const SignIn();
-                  }), (route) => false);
-                },
-                child: const Text("Log out")),
-          )
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (ctx) {
-            return const AddParticipant();
-          }));
-        },
-        child: const Icon(Icons.add),
-      ),
+      // appBar: AppBar(
+      //   title: Text(
+      //     'Welcome $team ',
+      //     style: const TextStyle(color: ColorManager.whiteColor),
+      //   ),
+      //   automaticallyImplyLeading: false,
+      //   backgroundColor: Colors.transparent,
+      //   actions: [
+      //     Padding(
+      //       padding: const EdgeInsets.all(8.0),
+      //       child: ElevatedButton(
+      //           onPressed: () {
+      //             FirebaseAuth.instance.signOut();
+      //             Navigator.pushAndRemoveUntil(context,
+      //                 MaterialPageRoute(builder: (ctx) {
+      //               return const SignIn();
+      //             }), (route) => false);
+      //           },
+      //           child: const Text("Log out")),
+      //     )
+      //   ],
+      // ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.push(context, MaterialPageRoute(builder: (ctx) {
+      //       return const AddParticipant();
+      //     }));
+      //   },
+      //   child: const Icon(Icons.add),
+      // ),
       body: StreamBuilder<List<Participants>>(
         stream: readParticipants(),
         builder: (contexts, snapshot) {
@@ -108,16 +94,16 @@ class _DataState extends State<HomePage> {
                       );
                     }));
                   },
-                  onLongPress: () {
-                    print('hello');
+                  // onLongPress: () {
+                  //   print('hello');
 
-                    showDialog(
-                        context: context,
-                        builder: (context) => DialogueBox(
-                              id: name![index],
-                            ),
-                        barrierDismissible: false);
-                  },
+                  //   showDialog(
+                  //       context: context,
+                  //       builder: (context) => DialogueBox(
+                  //             id: name![index],
+                  //           ),
+                  //       barrierDismissible: false);
+                  // },
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
                     child: Container(
@@ -174,25 +160,12 @@ class _DataState extends State<HomePage> {
   Stream<List<Participants>> readParticipants() {
     final authUser = FirebaseAuth.instance.currentUser;
     return FirebaseFirestore.instance
-        .collection(authUser!.email!)
-        .doc(authUser.uid)
+        .collection(widget.email)
+        .doc(widget.uid)
         .collection('Participants')
         .snapshots()
         .map((snapshot) => snapshot.docs
             .map((doc) => Participants.fromJson(doc.data()))
             .toList());
-  }
-
-  getTeam() {
-    final authUser = FirebaseAuth.instance.currentUser;
-    final docUser = FirebaseFirestore.instance
-        .collection(authUser!.email!)
-        .doc(authUser.uid)
-        .get()
-        .then((value) {
-      team = value.get('team');
-      print(team);
-      setState(() {});
-    });
   }
 }

@@ -83,15 +83,14 @@ class _AddParticipantState extends State<AddParticipant> {
                           ),
                           hint: Text('Enter Zone',
                               style: getRegularStyle(
-                                  color:
-                                      const Color.fromARGB(255, 173, 173, 173),
+                                  color: ColorManager.background,
                                   fontSize: 15)),
                           items: items
                               .map((item) => DropdownMenuItem<String>(
                                     value: item,
                                     child: Text(item,
                                         style: getRegularStyle(
-                                            color: ColorManager.black,
+                                            color: ColorManager.background,
                                             fontSize: 15)),
                                   ))
                               .toList(),
@@ -132,13 +131,12 @@ class _AddParticipantState extends State<AddParticipant> {
                   ),
                   child: TextField(
                     // focusNode: nfocus,
-                    style: const TextStyle(),
+                    style: const TextStyle(color: ColorManager.background),
                     controller: nameController,
                     decoration: InputDecoration(
                         hintText: 'Enter Name',
                         hintStyle: getRegularStyle(
-                            color: const Color.fromARGB(255, 173, 173, 173),
-                            fontSize: 15)),
+                            color: ColorManager.background, fontSize: 15)),
                   ),
                 ),
               ),
@@ -164,13 +162,12 @@ class _AddParticipantState extends State<AddParticipant> {
                   ),
                   child: TextField(
                     // focusNode: nfocus,
-                    style: const TextStyle(),
+                    style: const TextStyle(color: ColorManager.background),
                     controller: fatherNameController,
                     decoration: InputDecoration(
                         hintText: "Enter Father's Name",
                         hintStyle: getRegularStyle(
-                            color: const Color.fromARGB(255, 173, 173, 173),
-                            fontSize: 15)),
+                            color: ColorManager.background, fontSize: 15)),
                   ),
                 ),
               ),
@@ -194,13 +191,12 @@ class _AddParticipantState extends State<AddParticipant> {
                   ),
                   child: TextField(
                     // focusNode: nfocus,
-                    style: const TextStyle(),
+                    style: const TextStyle(color: ColorManager.background),
                     controller: contactNoController,
                     decoration: InputDecoration(
                         hintText: 'Contact No',
                         hintStyle: getRegularStyle(
-                            color: const Color.fromARGB(255, 173, 173, 173),
-                            fontSize: 15)),
+                            color: ColorManager.background, fontSize: 15)),
                   ),
                 ),
               ),
@@ -224,13 +220,12 @@ class _AddParticipantState extends State<AddParticipant> {
                   ),
                   child: TextField(
                     // focusNode: nfocus,
-                    style: const TextStyle(),
+                    style: const TextStyle(color: ColorManager.background),
                     controller: addressController,
                     decoration: InputDecoration(
                         hintText: 'Enter Place',
                         hintStyle: getRegularStyle(
-                            color: const Color.fromARGB(255, 173, 173, 173),
-                            fontSize: 15)),
+                            color: ColorManager.background, fontSize: 15)),
                   ),
                 ),
               ),
@@ -253,13 +248,12 @@ class _AddParticipantState extends State<AddParticipant> {
                   ),
                   child: TextField(
                     // focusNode: nfocus,
-                    style: const TextStyle(),
+                    style: const TextStyle(color: ColorManager.background),
                     controller: ageController,
                     decoration: InputDecoration(
                         hintText: 'Enter Age',
                         hintStyle: getRegularStyle(
-                            color: const Color.fromARGB(255, 173, 173, 173),
-                            fontSize: 15)),
+                            color: ColorManager.background, fontSize: 15)),
                   ),
                 ),
               ),
