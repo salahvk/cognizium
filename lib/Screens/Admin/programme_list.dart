@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cognizium/Screens/Admin/participant_list.dart';
 import 'package:cognizium/model/programmeModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +23,17 @@ class ProgrammeListPage extends StatelessWidget {
 
                     return ListView.builder(
                       itemBuilder: (context, index) {
+                        final programmeName = users![index].programme;
                         return ElevatedButton(
-                            onPressed: () {},
-                            child: Text(users![index].programme ?? ''));
+                            onPressed: () {
+                              print(programmeName);
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (ctx) {
+                                return ParticipantList(
+                                    programmeName: programmeName ?? '');
+                              }));
+                            },
+                            child: Text(programmeName ?? ''));
                       },
                       itemCount: users?.length ?? 0,
                     );
