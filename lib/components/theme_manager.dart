@@ -7,9 +7,9 @@ import 'styles_manager.dart';
 ThemeData getApplicationTheme(BuildContext context) {
   return ThemeData(
       appBarTheme: const AppBarTheme(
-        backgroundColor: ColorManager.background,
-        iconTheme: IconThemeData(color: ColorManager.primary, size: 30),
-      ),
+          backgroundColor: ColorManager.background,
+          iconTheme: IconThemeData(color: ColorManager.primary, size: 30),
+          titleTextStyle: TextStyle(color: ColorManager.background)),
       visualDensity: VisualDensity.adaptivePlatformDensity,
       fontFamily: GoogleFonts.lexendDeca().fontFamily,
       scaffoldBackgroundColor: ColorManager.background,
@@ -21,6 +21,7 @@ ThemeData getApplicationTheme(BuildContext context) {
       //   onSurface: ColorManager.whiteText,
       // ),
       // canvasColor: ColorManager.background,
+
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
         // foregroundColor: ColorManager.whiteText,

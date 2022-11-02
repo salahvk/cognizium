@@ -28,154 +28,234 @@ class _ProgrammesListState extends State<ProgrammesList> {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
     return Scaffold(
+      // appBar: AppBar(
+      //   title: const Text(
+      //     'Programme List',
+      //     style: TextStyle(color: ColorManager.background, fontSize: 30),
+      //   ),
+      // ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-        child: Column(
+        padding: const EdgeInsets.fromLTRB(10, 20, 0, 0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: const [
-                Text("Stage Events"),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              height: 200,
-              child: StreamBuilder<List<EventsModel>>(
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text('Something went wrong! ${snapshot.error}');
-                  } else if (snapshot.hasData) {
-                    final users = snapshot.data;
+            Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white, width: .1)),
+              child: Column(
+                children: [
+                  Row(
+                    children: const [
+                      Text(
+                        "Stage Events",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    height: 200,
+                    width: w * .2,
+                    child: StreamBuilder<List<EventsModel>>(
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Text(
+                              'Something went wrong! ${snapshot.error}');
+                        } else if (snapshot.hasData) {
+                          final users = snapshot.data;
 
-                    return ListView.builder(
-                      itemBuilder: (context, index) {
-                        return Container(
-                          child: Text(users?[index].event ?? ''),
-                        );
+                          return ListView.builder(
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                child: Center(
+                                  child: Container(
+                                    child: Text(users?[index].event ?? ''),
+                                  ),
+                                ),
+                              );
+                            },
+                            itemCount: users?.length,
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
                       },
-                      itemCount: users?.length,
-                    );
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
-                stream: readStage(),
+                      stream: readStage(),
+                    ),
+                  ),
+                ],
               ),
             ),
 
             // * Off stage events
 
-            Row(
-              children: const [
-                Text("Off Stage Events"),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              height: 200,
-              child: StreamBuilder<List<EventsModel>>(
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text('Something went wrong! ${snapshot.error}');
-                  } else if (snapshot.hasData) {
-                    final users = snapshot.data;
+            Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white, width: .1)),
+              child: Column(
+                children: [
+                  Row(
+                    children: const [
+                      Text(
+                        "Off Stage Events",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    height: 200,
+                    width: w * .2,
+                    child: StreamBuilder<List<EventsModel>>(
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Text(
+                              'Something went wrong! ${snapshot.error}');
+                        } else if (snapshot.hasData) {
+                          final users = snapshot.data;
 
-                    return ListView.builder(
-                      itemBuilder: (context, index) {
-                        return Container(
-                          child: Text(users?[index].event ?? ''),
-                        );
+                          return ListView.builder(
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                child: Center(
+                                  child: Container(
+                                    child: Text(users?[index].event ?? ''),
+                                  ),
+                                ),
+                              );
+                            },
+                            itemCount: users?.length,
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
                       },
-                      itemCount: users?.length,
-                    );
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
-                stream: readOffStage(),
+                      stream: readOffStage(),
+                    ),
+                  ),
+                ],
               ),
             ),
 
-            Row(
-              children: const [
-                Text("General Stage Events"),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              height: 200,
-              child: StreamBuilder<List<EventsModel>>(
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text('Something went wrong! ${snapshot.error}');
-                  } else if (snapshot.hasData) {
-                    final users = snapshot.data;
+            Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white, width: .1)),
+              child: Column(
+                children: [
+                  Row(
+                    children: const [
+                      Text(
+                        "General Stage Events",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    height: 200,
+                    width: w * .2,
+                    child: StreamBuilder<List<EventsModel>>(
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Text(
+                              'Something went wrong! ${snapshot.error}');
+                        } else if (snapshot.hasData) {
+                          final users = snapshot.data;
 
-                    return ListView.builder(
-                      itemBuilder: (context, index) {
-                        return Container(
-                          child: Text(users?[index].event ?? ''),
-                        );
+                          return ListView.builder(
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                child: Center(
+                                  child: Container(
+                                    child: Text(users?[index].event ?? ''),
+                                  ),
+                                ),
+                              );
+                            },
+                            itemCount: users?.length,
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
                       },
-                      itemCount: users?.length,
-                    );
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
-                stream: readgStage(),
+                      stream: readgStage(),
+                    ),
+                  ),
+                ],
               ),
             ),
 
             // * general off stage
 
-            Row(
-              children: const [
-                Text("General off Stage Events"),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              height: 200,
-              child: StreamBuilder<List<EventsModel>>(
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text('Something went wrong! ${snapshot.error}');
-                  } else if (snapshot.hasData) {
-                    final users = snapshot.data;
+            Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white, width: .1)),
+              child: Column(
+                children: [
+                  Row(
+                    children: const [
+                      Text(
+                        "General off Stage Events",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    height: 200,
+                    width: w * .2,
+                    child: StreamBuilder<List<EventsModel>>(
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Text(
+                              'Something went wrong! ${snapshot.error}');
+                        } else if (snapshot.hasData) {
+                          final users = snapshot.data;
 
-                    return ListView.builder(
-                      itemBuilder: (context, index) {
-                        return Container(
-                          child: Text(users?[index].event ?? ''),
-                        );
+                          return ListView.builder(
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                child: Center(
+                                  child: Container(
+                                    child: Text(users?[index].event ?? ''),
+                                  ),
+                                ),
+                              );
+                            },
+                            itemCount: users?.length,
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
                       },
-                      itemCount: users?.length,
-                    );
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
-                stream: readgOffStage(),
+                      stream: readgOffStage(),
+                    ),
+                  ),
+                ],
               ),
-            ),
+            )
           ],
         ),
       ),

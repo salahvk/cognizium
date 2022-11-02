@@ -1,5 +1,6 @@
 import 'package:cognizium/Screens/Admin/programme_list.dart';
 import 'package:cognizium/Screens/sign_in.dart';
+import 'package:cognizium/components/color_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,8 @@ class _AdminHomePageState extends State<AdminHomePage> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Welcome ${user.email} '),
+        title: Text('Welcome ${user.email} ',
+            style: const TextStyle(color: ColorManager.whiteColor)),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         actions: [
