@@ -75,6 +75,8 @@ class _SignInState extends State<SignIn> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 8.0),
                           child: TextField(
+                            style:
+                                const TextStyle(color: ColorManager.background),
                             keyboardType: TextInputType.emailAddress,
                             controller: emailcontroller,
                             onSubmitted: (value) {
@@ -103,6 +105,8 @@ class _SignInState extends State<SignIn> {
                           child: Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: TextField(
+                          style:
+                              const TextStyle(color: ColorManager.background),
                           focusNode: focusNode,
                           obscureText: !_isPasswordVisible,
                           controller: passcontroller,
