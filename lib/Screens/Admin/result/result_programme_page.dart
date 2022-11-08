@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cognizium/Screens/Admin/price_list.dart';
+import 'package:cognizium/Screens/Admin/result/price_list.dart';
 import 'package:cognizium/model/programmeModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,9 @@ class ResultProgrammePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: const BackButton(color: Colors.white),
+      ),
       body: SafeArea(
           child: Padding(
               padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),

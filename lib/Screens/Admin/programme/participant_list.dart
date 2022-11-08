@@ -1,18 +1,19 @@
 // ignore_for_file: avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cognizium/Screens/Admin/add_result.dart';
+import 'package:cognizium/components/color_manager.dart';
+import 'package:cognizium/components/styles_manager.dart';
 import 'package:flutter/material.dart';
 
-class PriceListPage extends StatefulWidget {
+class ParticipantList extends StatefulWidget {
   final String programmeName;
-  const PriceListPage({super.key, required this.programmeName});
+  const ParticipantList({super.key, required this.programmeName});
 
   @override
-  State<PriceListPage> createState() => _PriceListState();
+  State<ParticipantList> createState() => _ParticipantListState();
 }
 
-class _PriceListState extends State<PriceListPage> {
+class _ParticipantListState extends State<ParticipantList> {
   List<dynamic> participantData = [];
   List<Map> data = [];
   int length = 0;
@@ -31,17 +32,14 @@ class _PriceListState extends State<PriceListPage> {
     // print(data[0]['name']);
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (ctx) {
-            return AddResult(
-              programmeName: widget.programmeName,
-            );
-          }));
-        },
-        child: const Icon(Icons.add),
+      appBar: AppBar(
+        centerTitle: true,
+        leading: const BackButton(color: Colors.white),
+        title: Text(
+          widget.programmeName,
+          style: getBoldtStyle(color: ColorManager.whiteText, fontSize: 18),
+        ),
       ),
-      // appBar: AppBar(),
       body: SafeArea(
           child: Padding(
               padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
@@ -49,12 +47,10 @@ class _PriceListState extends State<PriceListPage> {
                   // Container()
                   Column(
                 children: [
-                  Container(
-                    child: Text(widget.programmeName),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  // Container(
+                  //   child: Text(widget.programmeName),
+                  // ),
+
                   Expanded(
                     child: ListView.builder(
                       itemBuilder: (context, index) {
@@ -103,36 +99,7 @@ class _PriceListState extends State<PriceListPage> {
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: Center(
-                                        child:
-                                            Text(data[index]['place'] ?? ''))),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Container(
-                                    height: 50,
-                                    width: 200,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.black, width: .5),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Center(
-                                        child:
-                                            Text(data[index]['team'] ?? ''))),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Container(
-                                    height: 50,
-                                    width: 200,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.black, width: .5),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Center(
-                                        child:
-                                            Text(data[index]['points'] ?? '')))
+                                        child: Text(data[index]['team'] ?? '')))
                               ],
                             ));
                         // child: const Text(''));
@@ -151,7 +118,7 @@ class _PriceListState extends State<PriceListPage> {
         .doc(widget.programmeName)
         .get()
         .then((value) {
-      participantData = value.get('result');
+      participantData = value.get('participant');
       length = participantData.length;
       // print(length);
 

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cognizium/Screens/Admin/price_list.dart';
+import 'package:cognizium/Screens/Admin/result/price_list.dart';
 import 'package:cognizium/components/color_manager.dart';
 import 'package:cognizium/components/styles_manager.dart';
 import 'package:cognizium/controllers/controllers.dart';
@@ -7,7 +7,6 @@ import 'package:cognizium/provider/data_provider.dart';
 import 'package:cognizium/utils/snack_bar.dart';
 import 'package:cognizium/widgets/title_widgets.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,10 +21,11 @@ class AddResult extends StatefulWidget {
 class _AddResultState extends State<AddResult> {
   String? selectedValue;
   String? team;
+  int teamPoint = 0;
   @override
   void initState() {
     super.initState();
-    getTeam();
+    // getTeam();
   }
 
   @override
@@ -42,6 +42,9 @@ class _AddResultState extends State<AddResult> {
       // 'Item4',
     ];
     return Scaffold(
+      appBar: AppBar(
+        leading: const BackButton(color: Colors.white),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
@@ -125,6 +128,7 @@ class _AddResultState extends State<AddResult> {
                             setState(() {
                               selectedValue = value as String;
                             });
+                            getPointTeam(selectedValue ?? '');
                           },
                           buttonHeight: 40,
                           // buttonWidth: 140,
@@ -221,9 +225,15 @@ class _AddResultState extends State<AddResult> {
       showSnackBar("Enter a point!", context,
           icon: Icons.place, color: Colors.white);
       return;
+    } else if (selectedValue == null) {
+      showSnackBar("Select Your Team!", context,
+          icon: Icons.place, color: Colors.white);
+      return;
     }
 
     final programmes = FirebaseFirestore.instance.collection('programmes');
+    final points =
+        FirebaseFirestore.instance.collection('points').doc('points');
 
     // .collection('Participants')
     // .doc(nameController.text);
@@ -235,33 +245,54 @@ class _AddResultState extends State<AddResult> {
         'points': pointController.text,
         'team': selectedValue
       }
+      // print(object)
     ];
+    final pointInt = int.parse(pointController.text);
+
+    final totalPoints = pointInt + teamPoint;
+    // print('object');
+    print(totalPoints);
 
     try {
-      programmes.doc(widget.programmeName).set({
+      programmes.doc(widget.programmeName).update({
         "result": FieldValue.arrayUnion(resultData),
       });
+      points.update({selectedValue ?? '': totalPoints});
 
-      await Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (ctx) {
-        return PriceListPage(
-          programmeName: widget.programmeName,
-        );
-      }), (route) => false);
+      await Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (ctx) {
+          return PriceListPage(
+            programmeName: widget.programmeName,
+          );
+        }),
+      );
     } on Exception {
       print('Some exception occured');
     }
   }
 
-  getTeam() {
-    final authUser = FirebaseAuth.instance.currentUser;
-    final docUser = FirebaseFirestore.instance
-        .collection(authUser!.email!)
-        .doc(authUser.uid)
+  // getTeam() {
+  //   final authUser = FirebaseAuth.instance.currentUser;
+  //   final docUser = FirebaseFirestore.instance
+  //       .collection(authUser!.email!)
+  //       .doc(authUser.uid)
+  //       .get()
+  //       .then((value) {
+  //     team = value.get('team');
+  //     print(team);
+  //   });
+  // }
+
+  getPointTeam(String team) {
+    print(team);
+    FirebaseFirestore.instance
+        .collection('points')
+        .doc('points')
         .get()
         .then((value) {
-      team = value.get('team');
-      print(team);
+      teamPoint = value.get(team);
+      print(teamPoint);
     });
   }
 }

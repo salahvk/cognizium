@@ -3,25 +3,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class ParticipantList extends StatefulWidget {
-  final String programmeName;
-  const ParticipantList({super.key, required this.programmeName});
+class PointTable extends StatefulWidget {
+  const PointTable({
+    super.key,
+  });
 
   @override
-  State<ParticipantList> createState() => _ParticipantListState();
+  State<PointTable> createState() => _PointTableState();
 }
 
-class _ParticipantListState extends State<ParticipantList> {
+class _PointTableState extends State<PointTable> {
   List<dynamic> participantData = [];
-  List<Map> data = [];
+  // List<Map> data = [];
+  List<String> team = [];
+  List<int> points = [];
   int length = 0;
   @override
   void initState() {
     super.initState();
-    data = [];
+    // data = [];
     participantData = [];
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      getUserData();
+      getPointTableData();
     });
   }
 
@@ -30,7 +33,9 @@ class _ParticipantListState extends State<ParticipantList> {
     // print(data[0]['name']);
 
     return Scaffold(
-      // appBar: AppBar(),
+      appBar: AppBar(
+        leading: const BackButton(color: Colors.white),
+      ),
       body: SafeArea(
           child: Padding(
               padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
@@ -38,9 +43,9 @@ class _ParticipantListState extends State<ParticipantList> {
                   // Container()
                   Column(
                 children: [
-                  Container(
-                    child: Text(widget.programmeName),
-                  ),
+                  // Container(
+                  //   child: Text(widget.programmeName),
+                  // ),
                   const SizedBox(
                     height: 10,
                   ),
@@ -77,9 +82,7 @@ class _ParticipantListState extends State<ParticipantList> {
                                             color: Colors.black, width: .5),
                                         borderRadius:
                                             BorderRadius.circular(10)),
-                                    child: Center(
-                                        child:
-                                            Text(data[index]['name'] ?? ''))),
+                                    child: Center(child: Text(team[index]))),
                                 const SizedBox(
                                   width: 10,
                                 ),
@@ -92,12 +95,12 @@ class _ParticipantListState extends State<ParticipantList> {
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: Center(
-                                        child: Text(data[index]['team'] ?? '')))
+                                        child: Text(points[index].toString())))
                               ],
                             ));
                         // child: const Text(''));
                       },
-                      itemCount: data.length,
+                      itemCount: team.length,
                     ),
                   ),
                 ],
@@ -105,21 +108,33 @@ class _ParticipantListState extends State<ParticipantList> {
     );
   }
 
-  getUserData() {
+  getPointTableData() {
+    team = [];
+    points = [];
+    print(team);
     FirebaseFirestore.instance
-        .collection('programmes')
-        .doc(widget.programmeName)
+        .collection('points')
+        .doc('points')
         .get()
         .then((value) {
-      participantData = value.get('participant');
-      length = participantData.length;
-      // print(length);
-
-      for (int i = 0; i <= length - 1; i++) {
-        data.add(participantData[i]);
-      }
-      print(data);
+      // print(value.data());
+      final data = value.data();
+      data?.forEach((key, value) {
+        team.add(key);
+        points.add(value);
+        print(key + value.toString());
+        print(team);
+      });
       setState(() {});
+      // participantData = value.get('participant');
+      // length = participantData.length;
+      // // print(length);
+
+      // for (int i = 0; i <= length - 1; i++) {
+      //   data.add(participantData[i]);
+      // }
+      // print(data);
+      // setState(() {});
 
       // print(data[0]['name']);
     });
