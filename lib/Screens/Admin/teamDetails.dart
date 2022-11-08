@@ -91,6 +91,8 @@ class _TeamDetailsState extends State<TeamDetails> {
                     Navigator.push(context, MaterialPageRoute(builder: (ctx) {
                       return ProgrammesList(
                         name: name[index],
+                        email: widget.email,
+                        uid: widget.uid,
                       );
                     }));
                   },

@@ -1,4 +1,5 @@
 import 'package:cognizium/Screens/Admin/programme_list.dart';
+import 'package:cognizium/Screens/Admin/result_programme_page.dart';
 import 'package:cognizium/Screens/Admin/teamDetails.dart';
 import 'package:cognizium/Screens/sign_in.dart';
 import 'package:cognizium/components/color_manager.dart';
@@ -51,6 +52,17 @@ class _AdminHomePageState extends State<AdminHomePage> {
                     navToProgramme(context);
                   },
                   child: const Text("Programme List")),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              width: 200,
+              child: ElevatedButton(
+                  onPressed: () {
+                    navToResultProgramme(context);
+                  },
+                  child: const Text("Results")),
             ),
             const SizedBox(
               height: 10,
@@ -127,6 +139,12 @@ class _AdminHomePageState extends State<AdminHomePage> {
   navToProgramme(context) {
     Navigator.push(context, MaterialPageRoute(builder: (ctx) {
       return const ProgrammeListPage();
+    }));
+  }
+
+  navToResultProgramme(context) {
+    Navigator.push(context, MaterialPageRoute(builder: (ctx) {
+      return const ResultProgrammePage();
     }));
   }
 

@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 
 class ProgrammesList extends StatefulWidget {
   String? name;
-  ProgrammesList({super.key, required this.name});
+  String? email;
+  String? uid;
+  ProgrammesList({super.key, required this.name, this.email, this.uid});
 
   @override
   State<ProgrammesList> createState() => _ProgrammesListState();
@@ -16,14 +18,21 @@ class _ProgrammesListState extends State<ProgrammesList> {
   DocumentReference<Map<String, dynamic>>? collectionData;
   @override
   void initState() {
-    // TODO: implement initState
+    print(widget.name);
     super.initState();
     authUser = FirebaseAuth.instance.currentUser;
-    collectionData = FirebaseFirestore.instance
-        .collection(authUser!.email!)
-        .doc(authUser?.uid)
-        .collection('Participants')
-        .doc(widget.name);
+
+    collectionData = authUser!.email! == 'cogniziumofficial@gmail.com'
+        ? FirebaseFirestore.instance
+            .collection(widget.email!)
+            .doc(widget.uid)
+            .collection('Participants')
+            .doc(widget.name)
+        : FirebaseFirestore.instance
+            .collection(authUser!.email!)
+            .doc(authUser?.uid)
+            .collection('Participants')
+            .doc(widget.name);
   }
 
   @override
