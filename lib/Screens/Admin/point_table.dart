@@ -35,6 +35,14 @@ class _PointTableState extends State<PointTable> {
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(color: Colors.white),
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.all(8.0),
+        //     child: ElevatedButton(
+        //         onPressed: resetPointTable,
+        //         child: const Text("Reset Point Table")),
+        //   )
+        // ],
       ),
       body: SafeArea(
           child: Padding(
@@ -122,21 +130,24 @@ class _PointTableState extends State<PointTable> {
       data?.forEach((key, value) {
         team.add(key);
         points.add(value);
-        print(key + value.toString());
-        print(team);
+        // print(key + value.toString());
+        // print(team);
       });
       setState(() {});
-      // participantData = value.get('participant');
-      // length = participantData.length;
-      // // print(length);
-
-      // for (int i = 0; i <= length - 1; i++) {
-      //   data.add(participantData[i]);
-      // }
-      // print(data);
-      // setState(() {});
-
-      // print(data[0]['name']);
     });
+  }
+
+  resetPointTable() async {
+    final points =
+        FirebaseFirestore.instance.collection('points').doc('points');
+    await points.update({
+      'Bagdad': 0,
+      'Dimashk': 0,
+      'Iskanthar': 0,
+      'Khairuvaan': 0,
+      'Qurthuba': 0,
+      'khurasan': 0
+    });
+    setState(() {});
   }
 }
