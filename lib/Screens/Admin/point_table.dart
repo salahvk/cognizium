@@ -15,8 +15,8 @@ class PointTable extends StatefulWidget {
 class _PointTableState extends State<PointTable> {
   List<dynamic> participantData = [];
   // List<Map> data = [];
-  List<String> team = [];
-  List<int> points = [];
+  List<List> team = [];
+  // List<int> points = [];
   int length = 0;
   @override
   void initState() {
@@ -90,7 +90,7 @@ class _PointTableState extends State<PointTable> {
                                             color: Colors.black, width: .5),
                                         borderRadius:
                                             BorderRadius.circular(10)),
-                                    child: Center(child: Text(team[index]))),
+                                    child: Center(child: Text(team[index][0]))),
                                 const SizedBox(
                                   width: 10,
                                 ),
@@ -103,7 +103,7 @@ class _PointTableState extends State<PointTable> {
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: Center(
-                                        child: Text(points[index].toString())))
+                                        child: Text(team[index][1].toString())))
                               ],
                             ));
                         // child: const Text(''));
@@ -118,7 +118,7 @@ class _PointTableState extends State<PointTable> {
 
   getPointTableData() {
     team = [];
-    points = [];
+    // points = [];
     print(team);
     FirebaseFirestore.instance
         .collection('points')
@@ -128,11 +128,22 @@ class _PointTableState extends State<PointTable> {
       // print(value.data());
       final data = value.data();
       data?.forEach((key, value) {
-        team.add(key);
-        points.add(value);
-        // print(key + value.toString());
-        // print(team);
+        print(value);
+        team.add([key, value]);
+
+        // points.add(value);
       });
+
+      for (int i = 0; i < 6; i++) {
+        for (int j = i + 1; j < 6; j++) {
+          if (team[i][1] < team[j][1]) {
+            List a = team[i];
+            team[i] = team[j];
+            team[j] = a;
+          }
+        }
+      }
+
       setState(() {});
     });
   }
