@@ -43,7 +43,9 @@ class _AddResultState extends State<AddResult> {
     ];
     return Scaffold(
       appBar: AppBar(
-        leading: const BackButton(color: Colors.white),
+        leading: const BackButton(
+          color: Colors.white,
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(

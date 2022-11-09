@@ -1,3 +1,4 @@
+import 'package:cognizium/components/color_manager.dart';
 import 'package:cognizium/provider/data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -84,16 +85,21 @@ class _SerDrawerListState extends State<SerDrawerList> {
                 decoration: BoxDecoration(
                   // border: Border.all(color: Colors.white10.withAlpha(80)),
                   borderRadius: BorderRadius.circular(4),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.white.withAlpha(70),
-                      blurRadius: 10.0,
-                      spreadRadius: 0.0,
-                    ),
-                  ],
+                  // boxShadow: [
+                  //   BoxShadow(
+                  //     color: Colors.white.withAlpha(70),
+                  //     blurRadius: 10.0,
+                  //     spreadRadius: 0.0,
+                  //   ),
+                  // ],
                   color: Colors.white.withOpacity(0.5),
                 ),
-                child: isTickSelected ? const Icon(Icons.check) : null,
+                child: isTickSelected
+                    ? const Icon(
+                        Icons.check_box,
+                        color: ColorManager.whiteColor,
+                      )
+                    : null,
               ),
               Padding(
                   padding: const EdgeInsets.only(left: 8),

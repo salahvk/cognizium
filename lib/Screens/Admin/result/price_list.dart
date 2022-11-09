@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cognizium/Screens/Admin/admin_home_page.dart';
 import 'package:cognizium/Screens/Admin/result/add_result.dart';
 import 'package:cognizium/components/color_manager.dart';
 import 'package:cognizium/components/styles_manager.dart';
@@ -45,7 +46,14 @@ class _PriceListState extends State<PriceListPage> {
       ),
       appBar: AppBar(
         centerTitle: true,
-        leading: const BackButton(color: Colors.white),
+        leading: BackButton(
+            color: Colors.white,
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(context,
+                  MaterialPageRoute(builder: (ctx) {
+                return const AdminHomePage();
+              }), (route) => false);
+            }),
         title: Text(
           widget.programmeName,
           style: getBoldtStyle(color: ColorManager.whiteText, fontSize: 18),
