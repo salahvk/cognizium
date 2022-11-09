@@ -231,6 +231,10 @@ class _AddResultState extends State<AddResult> {
       showSnackBar("Select Your Team!", context,
           icon: Icons.place, color: Colors.white);
       return;
+    } else if (int.tryParse(pointController.text) == null) {
+      showSnackBar("Point Must be number", context,
+          icon: Icons.place, color: Colors.white);
+      return;
     }
 
     final programmes = FirebaseFirestore.instance.collection('programmes');
